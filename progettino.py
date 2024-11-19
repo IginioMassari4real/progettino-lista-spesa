@@ -1,4 +1,4 @@
-lista1 = ["3", "5"]
+lista1 = ["pane", "cozze"]
 def aggiunta_elementi():
     elemento = input(f"Inserisci l'elemento")
     lista1.append(elemento)
