@@ -1,24 +1,34 @@
-from flask import Flask, render_template
-#inizializza l'app Flask
-app = Flask(__name__)
-#rotta principale
-@app.route('/')
-def home():
-    return render_template('index.html')
-#avvio dell'app Flask
-if __name__ == '__main__':
-    app.run(debug=True)
+from flask import Flask, render_template, request, redirect, url_for
 
-lista_spesa = ["pane", "cozze"]
+app = Flask(__name__)
+
+lista_spesa = []
+
+@app.route('/')
+def index():
+
+    return render_template('index.html', lista=lista_spesa)
+
 @app.route('/aggiungi', methods=['POST'])
 def aggiungi():
-    elemento = request.form['elemento']
+
+    elemento = request.form.get('elemento')
     if elemento:
         lista_spesa.append(elemento)
-    return redirect(url_for('home'))
+    return redirect(url_for('index'))
 
-@app.route('/rimuovi/<int:indice>', methods=['POST'])
+@app.route('/rimuovi/<int:indice>')
 def rimuovi(indice):
+
     if 0 <= indice < len(lista_spesa):
         lista_spesa.pop(indice)
-    return redirect(url_for('home'))    
+    return redirect(url_for('index'))
+
+@app.route('/svuota')
+def svuota():
+
+    lista_spesa.clear()
+    return redirect(url_for('index'))
+
+if __name__ == '__main__':
+    app.run(debug=True)

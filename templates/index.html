@@ -1,29 +1,39 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>LISTA DELLA SPESA</title>
-    </head>
-    <body>
-        <h1>La tua Lista della Spesa</h1>
-        {% if lista_spesa %}
-            <ul>
-                {% for elemento in lista_spesa %}
-                    <li>
-                        {{ elemento }}
-                        <form action="/rimuovi/{{ loop.index0 }}" method="post" style="display:inline;">
-                            <button type="submit">Rimuovi</button>
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>La lista è vuota.</p>
-        {% endif %}
-        <form action="/aggiungi" method="post">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAROVELLI UOMO PICCOLO</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>LISTA DELLA SPESA</h1>
+
+        <div class="card">
+            <div class="card-body">
+                {% if lista %}
+                    <ul class="list-group">
+                        {% for elemento in lista %}
+                            <li class="list-group-item">
+                                <span>{{ elemento }}</span>
+                                <a href="{{ url_for('rimuovi', indice=loop.index0) }}" class="btn-remove">RIMUOVI</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="actions">
+                        <a href="{{ url_for('svuota') }}" class="btn-clear">SVUOTA LA TUA LISTA</a>
+                    </div>
+                {% else %}
+                    <p class="empty-message">LA TUA LISTA DELLA SPESA E' VUOTA, COME CAROVELLI</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <form action="{{ url_for('aggiungi') }}" method="POST" class="add-form">
             <input type="text" name="elemento" placeholder="Aggiungi un elemento" required>
-            <button type="submit">Aggiungi</button>
+            <button type="submit" class="btn-add">AGGIUNGI</button>
         </form>
-    </body>
+    </div>
+</body>
 </html>
