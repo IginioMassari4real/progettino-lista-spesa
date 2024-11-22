@@ -1,13 +1,9 @@
-/* style.css */
-
-/* Reset di base */
 body, h1, p, ul, li, a, input, button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Stile per il body */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f9;
@@ -20,7 +16,6 @@ body {
     margin: 0;
 }
 
-/* Contenitore principale */
 .container {
     width: 90%;
     max-width: 600px;
@@ -32,14 +27,12 @@ body {
     text-align: center;
 }
 
-/* Titolo */
 h1 {
     font-size: 24px;
     color: #2c3e50;
     margin-bottom: 20px;
 }
 
-/* Card */
 .card {
     margin-bottom: 20px;
 }
@@ -48,7 +41,6 @@ h1 {
     padding: 10px;
 }
 
-/* Lista */
 .list-group {
     list-style: none;
     margin: 0;
@@ -71,7 +63,6 @@ h1 {
     color: #34495e;
 }
 
-/* Pulsanti */
 .btn-remove {
     background: #e74c3c;
     color: white;
@@ -88,7 +79,6 @@ h1 {
     background: #c0392b;
 }
 
-/* Azioni */
 .actions {
     margin-top: 20px;
 }
@@ -110,14 +100,12 @@ h1 {
     background: #2980b9;
 }
 
-/* Messaggio lista vuota */
 .empty-message {
     font-size: 16px;
     color: #95a5a6;
     font-style: italic;
 }
 
-/* Form di aggiunta */
 .add-form {
     display: flex;
     justify-content: center;
