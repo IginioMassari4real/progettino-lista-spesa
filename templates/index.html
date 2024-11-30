@@ -1,180 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAROVELLI UOMO PICCOLO</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Lista della Spesa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">    
 </head>
 <body>
-    <div class="container">
-        <h1>LISTA DELLA SPESA</h1>
-        <style>
-            
-body, h1, p, ul, li, a, input, button {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+    <style>
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f3ec78, #af4261);
     color: #333;
-    line-height: 1.6;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.container {
-    width: 90%;
-    max-width: 600px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    padding: 20px;
+    min-height: 100vh;
     text-align: center;
 }
 
 h1 {
-    font-size: 24px;
-    color: #2c3e50;
+    font-size: 3rem;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin-bottom: 20px;
 }
 
-.card {
-    margin-bottom: 20px;
+form {
+    margin: 20px 0;
 }
 
-.card-body {
+input[type="text"] {
+    width: 300px;
     padding: 10px;
-}
-
-.list-group {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.list-group-item {
-    background: #f9f9f9;
-    margin-bottom: 10px;
-    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
     border-radius: 5px;
+    margin-right: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background: #af4261;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background: #f3ec78;
+    color: #af4261;
+    transform: scale(1.05);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    width: 80%;
+    max-width: 600px;
+}
+
+li {
+    background: #ffffff;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #e1e1e1;
+    font-size: 1.2rem;
 }
 
-.list-group-item span {
-    font-size: 16px;
-    color: #34495e;
+li:nth-child(odd) {
+    background: #f8f8f8;
 }
 
-.btn-remove {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 5px;
+li button {
+    background: #ff6b6b;
+    font-size: 0.9rem;
     padding: 5px 10px;
-    text-decoration: none;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.btn-remove:hover {
-    background: #c0392b;
+li button:hover {
+    background: #ff4040;
 }
 
-.actions {
+form[action="/svuota"] button {
+    background: #007bff;
     margin-top: 20px;
 }
 
-.btn-clear {
-    display: inline-block;
-    background: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.3s;
+form[action="/svuota"] button:hover {
+    background: #0056b3;
 }
 
-.btn-clear:hover {
-    background: #2980b9;
-}
+    </style>
+    <h1>Lista della Spesa</h1>
+    <form action="/aggiungi" method="POST">
+        <input type="text" name="elemento" placeholder="Nuovo elemento" required>
+        <button type="submit">Aggiungi</button>
+    </form>
 
-.empty-message {
-    font-size: 16px;
-    color: #95a5a6;
-    font-style: italic;
-}
+    <ul>
+        {% for item in elementi %}
+        <li>
+            {{ item.elemento }}
+            <form action="/rimuovi/{{ item.id }}" method="POST" style="display:inline;">
+                <button type="submit">Rimuovi</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
 
-.add-form {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.add-form input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.add-form button {
-    background: #27ae60;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.add-form button:hover {
-    background: #218c54;
-}
-
-
-        </style>
-
-        <div class="card">
-            <div class="card-body">
-                {% if lista %}
-                    <ul class="list-group">
-                        {% for elemento in lista %}
-                            <li class="list-group-item">
-                                <span>{{ elemento }}</span>
-                                <a href="{{ url_for('rimuovi', indice=loop.index0) }}" class="btn-remove">RIMUOVI</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <div class="actions">
-                        <a href="{{ url_for('svuota') }}" class="btn-clear">SVUOTA LA TUA LISTA</a>
-                    </div>
-                {% else %}
-                    <p class="empty-message">LA TUA LISTA DELLA SPESA E' VUOTA, COME CAROVELLI</p>
-                {% endif %}
-            </div>
-        </div>
-
-        <form action="{{ url_for('aggiungi') }}" method="POST" class="add-form">
-            <input type="text" name="elemento" placeholder="Aggiungi un elemento" required>
-            <button type="submit" class="btn-add">AGGIUNGI</button>
-        </form>
-    </div>
+    <form action="/svuota" method="POST">
+        <button type="submit">Svuota Lista</button>
+    </form>
 </body>
 </html>
