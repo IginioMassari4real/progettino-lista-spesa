@@ -1,15 +1,12 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from models import db, ListaSpesa
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lista_spesa.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
-
-class ListaSpesa(db.Model):
-    id = db.Column(db.Integer, primary_key=True)  
-    elemento = db.Column(db.String(100), nullable=False) 
+db.init_app(app)
 
 with app.app_context():
     db.create_all()  
