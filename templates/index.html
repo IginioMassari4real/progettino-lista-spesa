@@ -3,8 +3,9 @@
 <head>
     <title>Lista della Spesa</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">    
-</head>
+</head> 
 <body>
+    <!-- CSS Per rendere più bello il sito -->
     <style>
 body {
     font-family: 'Arial', sans-serif;
@@ -104,22 +105,26 @@ form[action="/svuota"] button:hover {
 
     </style>
     <h1>Lista della Spesa</h1>
+
+    <!-- Form per aggiungere un nuovo elemento alla lista -->
     <form action="/aggiungi" method="POST">
         <input type="text" name="elemento" placeholder="Nuovo elemento" required>
         <button type="submit">Aggiungi</button>
     </form>
 
     <ul>
+        <!-- Ciclo for per mostrare tutti gli elementi nella lista -->
         {% for item in elementi %}
         <li>
             {{ item.elemento }}
+            <!-- Form per rimuovere un elemento specifico, identificato dall'ID -->
             <form action="/rimuovi/{{ item.id }}" method="POST" style="display:inline;">
                 <button type="submit">Rimuovi</button>
             </form>
         </li>
         {% endfor %}
     </ul>
-
+    <!-- Form per svuotare completamente la lista -->
     <form action="/svuota" method="POST">
         <button type="submit">Svuota Lista</button>
     </form>
